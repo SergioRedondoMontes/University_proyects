@@ -1,0 +1,71 @@
+#include <iostream>
+#include "shortable_int_matriz.h"
+
+ShortableIntMatriz::ShortableIntMatriz(int sizeRow, int sizeCol)
+{
+    this->_sizeRow = sizeRow;
+    this->_sizeCol = sizeCol;
+    this->_arrMatrix = (int **)malloc(sizeRow * sizeof((int *)malloc(sizeCol * sizeof(int))));
+}
+
+/* addRandomNumberToMatrix
+ * Este método añade números aleatorios al array interno, para
+ * poder hacer esto tenemos que recorrer la primera dimension y crear
+ * un array, que al insertarlo en la primera dimension destruimos.
+*/
+void ShortableIntMatriz::addRandomNumberToMatrix()
+{
+
+    for (int i = 0; i < _sizeRow; i++)
+    {
+        int *arrTemp = (int *)malloc(_sizeCol * sizeof(int));
+        for (int j = 0; j < _sizeCol; j++)
+        {
+            arrTemp[j] = rand() + 1;
+        }
+        _arrMatrix[i] = arrTemp;
+    }
+}
+/* orderArrAlgInsertion
+ * Movemos los elementos del array mientras que aux sea mas grande que la posicion actual
+*/
+void ShortableIntMatriz::orderArrAlgInsertion()
+{
+    int temp;
+    for (int i = 0; i < _sizeRow; i++)
+    {
+        int n, aux;
+        int *arrTemp = (int *)malloc(_sizeCol * sizeof(int));
+        for (int i = 1; i < _sizeCol; i++) //recorremos desde 1 hasta i-1 porque la posicion 0 no hace falta
+        {
+            aux = arrTemp[i]; //igualamos la variable aux al valor que vamos a comparar con los anteriores
+            n = i - 1;
+            while (n >= 0 & arrTemp[n] > aux)
+            {
+                arrTemp[n + 1] = arrTemp[n];
+                n--;
+            }
+            arrTemp[n + 1] = aux;
+        }
+    }
+}
+
+/*writeOnConsole
+* Recoremos la matriz con dos for pata imprimir los datos que contiene
+* el array interno.
+*/
+void ShortableIntMatriz::writeOnConsole()
+{
+    for (int i = 0; i < _sizeRow; i++)
+    {
+        for (int j = 0; j < _sizeCol; j++)
+        {
+            std::cout << _arrMatrix[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+ShortableIntMatriz::~ShortableIntMatriz()
+{
+}
