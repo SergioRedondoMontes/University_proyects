@@ -1,12 +1,12 @@
-
 #include <iostream>
+#include <iomanip>
 
 int askSize()
 {
     int sizeRow;
     do
     {
-        std::cout << "Introduzca el tamaño del array: >=2 ";
+        std::cout << "Introduzca el tamaño de la matriz: >=2 ";
         std::cin >> sizeRow;
     } while (sizeRow < 2);
 
@@ -18,7 +18,7 @@ int askNumOfArray()
     int sizeArr;
     do
     {
-        std::cout << "Introduzca el numero de arrays: >=1 ";
+        std::cout << "Introduzca el tamaño del array: >=1 ";
         std::cin >> sizeArr;
     } while (sizeArr < 1);
 
@@ -50,21 +50,26 @@ int **addRandomNumberToArray(int sizeRow, int sizeCol, int **arrMatrix)
 */
 void orderArrInsertionSort(int sizeRow, int sizeCol, int **arrMatrix)
 {
+
     int n, aux;
     for (int i = 0; i < sizeRow; i++)
     {
 
-        int *arrTemp = (int *)malloc(sizeCol * sizeof(int));
-        for (int i = 1; i < sizeCol; i++) //recorremos desde 1 hasta i-1 porque la posicion 0 no hace falta
+        //int *arrTemp = (int *)malloc(sizeCol * sizeof(int));
+        for (int j = 1; j < sizeCol; j++) //recorremos desde 1 hasta i-1 porque la posicion 0 no hace falta
         {
-            aux = arrTemp[i]; //igualamos la variable aux al valor que vamos a comparar con los anteriores
-            n = i - 1;
-            while (n >= 0 & arrTemp[n] > aux)
+
+            aux = arrMatrix[i][j]; //igualamos la variable aux al valor que vamos a comparar con los anteriores
+            n = j - 1;
+
+            //cout << "entra " << n << " " << arrTemp[n] << " " < < < < endl;
+            while (n >= 0 & arrMatrix[i][n] > aux)
             {
-                arrTemp[n + 1] = arrTemp[n];
+
+                arrMatrix[i][n + 1] = arrMatrix[i][n];
                 n--;
             }
-            arrTemp[n + 1] = aux;
+            arrMatrix[i][n + 1] = aux;
         }
     }
 }
@@ -158,27 +163,29 @@ int main()
     arrMatrixCopy = (int **)malloc(sizeRow * sizeof((int *)malloc(sizeCol * sizeof(int))));
 
     addRandomNumberToArray(sizeRow, sizeCol, arrMatrix);
-    //copyMatrix(sizeRow, sizeCol, arrMatrix, arrMatrixCopy);
+    copyMatrix(sizeRow, sizeCol, arrMatrix, arrMatrixCopy);
 
     std::cout << "arrMatriz sin ordenar" << std::endl;
 
     writeOnConsole(sizeRow, sizeCol, arrMatrix);
-    orderArrInsertionSort(sizeRow, sizeCol, arrMatrix);
 
-    //averageTimeQSort = testTimeInsertion(sizeRow, sizeCol, arrMatrix);
+    averageTimeQSort = testTimeInsertion(sizeRow, sizeCol, arrMatrix);
+    std::cout << std::setprecision(5) << std::fixed << "Insercion tarda: " << averageTimeInsertion << std::endl;
 
     std::cout << "arrMatriz ordenada" << std::endl;
 
     writeOnConsole(sizeRow, sizeCol, arrMatrix);
-    /*
+
     std::cout << "arrMatrizCopy sin ordenar" << std::endl;
 
     writeOnConsole(sizeRow, sizeCol, arrMatrixCopy);
     averageTimeInsertion = testTimeQSort(sizeRow, sizeCol, arrMatrixCopy);
 
+    std::cout << std::setprecision(5) << std::fixed << "Qsort tarda: " << averageTimeQSort << std::endl;
+
     std::cout << "arrMatrizCopy ordenado" << std::endl;
 
     writeOnConsole(sizeRow, sizeCol, arrMatrixCopy);
-*/
+
     return 0;
 }

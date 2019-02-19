@@ -55,14 +55,11 @@ void ShortableIntArray::orderArraAlgSelectionSort()
         min = i;
         for (int j = i + 1; j < _size; j++)
         {
-            //std::cout << "posicion j " << j << " posicion j +1  " << j + 1 << std::endl;
-            //std::cout << "[j] " << _arrVector[j] << " [j+1] " << _arrVector[j + 1] << std::endl;
 
             if (_arrVector[min] > _arrVector[j])
             {
                 min = j;
             }
-            //std::cout << "posicion temp " << temp << std::endl;
         }
         swapData(i, min);
     }
