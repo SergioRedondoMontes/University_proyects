@@ -76,18 +76,15 @@ Cell askCell()
 
 bool is_empty(char **board, int posX, int posY)
 {
-    if (posX < 0 || posY < 0 || posX < 0) // evitamos que se salga del tamaño del array
-    {
-        return false;
-    }
-    else if (board[posX][posY] == '-')
+
+    if (board[posX][posY] == '-')
     {
         return true;
     }
     return false;
 }
 
-bool is_valid(char **board, int size, int posX, int posY)
+bool is_valid(int size, int posX, int posY)
 {
 
     if (posX < size || posY < size)
@@ -98,6 +95,15 @@ bool is_valid(char **board, int size, int posX, int posY)
     return false;
 }
 
+bool checkEnds(int posX, int posY)
+{
+    if (posX < 0 || posY < 0) // evitamos que se salga del tamaño del array
+    {
+        return false;
+    }
+    return true;
+}
+
 bool buscar(char **board, int size, int posX, int posY)
 {
     if (posX == size - 1 && posY == size - 1)
@@ -105,41 +111,48 @@ bool buscar(char **board, int size, int posX, int posY)
         board[posX][posY] = '>';
         return true;
     }
-    if (is_empty(board, posX, posY))
+    if (checkEnds(posX, posY))
     {
-        if (is_valid(board, size, posX, posY))
+        if (is_empty(board, posX, posY))
         {
-            board[posX][posY] = '>';
+            if (is_valid(size, posX, posY))
+            {
+                board[posX][posY] = '>';
+            }
+            else
+            {
+                return false;
+            }
+            if (buscar(board, size, posX - 1, posY)) //Arriba
+            {
+                return true;
+            }
+            else if (buscar(board, size, posX + 1, posY)) //Abajo
+            {
+                return true;
+            }
+            else if (buscar(board, size, posX, posY - 1)) //Izquierda
+            {
+                return true;
+            }
+            else if (buscar(board, size, posX, posY + 1)) //Derecha
+            {
+                return true;
+            }
+            else
+            {
+                board[posX][posY] = '?';
+                return false;
+            }
         }
         else
         {
-            return false;
-        }
-        if (buscar(board, size, posX - 1, posY)) //Arriba
-        {
-            return true;
-        }
-        else if (buscar(board, size, posX + 1, posY)) //Abajo
-        {
-            return true;
-        }
-        else if (buscar(board, size, posX, posY - 1)) //Izquierda
-        {
-            return true;
-        }
-        else if (buscar(board, size, posX, posY + 1)) //Abajo
-        {
-            return true;
-        }
-        else
-        {
-            board[posX][posY] = '?';
+
             return false;
         }
     }
     else
     {
-
         return false;
     }
 }
@@ -173,9 +186,9 @@ void writeOnConsole(char **board, int posX, int posY)
 int main()
 {
     int posX, posY, size;
-    posX = 3;
-    posY = 3;
-    size = 3;
+    posX = 5;
+    posY = 5;
+    size = 5;
     char **board = (char **)malloc(posX * sizeof((char *)malloc(posY * sizeof(char))));
 
     fillMatrix(board, posX, posY);
@@ -200,7 +213,7 @@ int main()
 
     writeOnConsole(board, posX, posY);
 
-    buscar(board, size, 0, 0);
+    buscar(board, size, 1, 0);
 
     writeOnConsole(board, posX, posY);
 
