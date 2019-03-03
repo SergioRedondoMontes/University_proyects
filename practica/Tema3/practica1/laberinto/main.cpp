@@ -1,9 +1,86 @@
 #include <iostream>
 #include <string>
+#include "cell.h"
+
+//  Created by Sergio Redondo on 20/02/19.
+
+int askRow()
+{
+    int sizeRow;
+    do
+    {
+        std::cout << "Numero de filas? ";
+        std::cin >> sizeRow;
+    } while (sizeRow < 1);
+
+    return sizeRow;
+}
+
+int askCol()
+{
+    int sizeCol;
+    do
+    {
+        std::cout << "Numero de Columnas? ";
+        std::cin >> sizeCol;
+    } while (sizeCol < 1);
+
+    return sizeCol;
+}
+
+Cell askCell()
+{
+    Cell a;
+
+    int cell1, cell2;
+
+    std::cin >> cell1;
+    a.setCell1(cell1);
+    std::cin >> cell2;
+    a.setCell2(cell2);
+
+    return a;
+}
+
+// Cell askStart()
+// {
+//     Cell a;
+//     int cell1, cell2;
+//     do
+//     {
+//         std::cout << "Celda inicial? ";
+//         std::cin >> cell1;
+//         a.setCell1(cell1);
+//         std::cin >> cell2;
+//         a.setCell2(cell2);
+//     } while (cell1 != 0 && cell2 != 0);
+
+//     return a;
+// }
+
+// Cell askEnd()
+// {
+//     Cell a;
+//     int cell1, cell2;
+//     do
+//     {
+//         std::cout << "Celda final? ";
+//         std::cin >> cell1;
+//         a.setCell1(cell1);
+//         std::cin >> cell2;
+//         a.setCell2(cell2);
+//     } while (cell1 != 0 && cell2 != 0);
+
+//     return a;
+// }
 
 bool is_empty(char **board, int posX, int posY)
 {
-    if (board[posX][posY] == '-')
+    if (posX < 0 || posY < 0 || posX < 0) // evitamos que se salga del tamaño del array
+    {
+        return false;
+    }
+    else if (board[posX][posY] == '-')
     {
         return true;
     }
@@ -12,10 +89,12 @@ bool is_empty(char **board, int posX, int posY)
 
 bool is_valid(char **board, int size, int posX, int posY)
 {
+
     if (posX < size || posY < size)
     {
         return true;
     }
+
     return false;
 }
 
@@ -36,11 +115,19 @@ bool buscar(char **board, int size, int posX, int posY)
         {
             return false;
         }
-        if (buscar(board, size, posX, posY + 1))
+        if (buscar(board, size, posX - 1, posY)) //Arriba
         {
             return true;
         }
-        else if (buscar(board, size, posX + 1, posY))
+        else if (buscar(board, size, posX + 1, posY)) //Abajo
+        {
+            return true;
+        }
+        else if (buscar(board, size, posX, posY - 1)) //Izquierda
+        {
+            return true;
+        }
+        else if (buscar(board, size, posX, posY + 1)) //Abajo
         {
             return true;
         }
@@ -56,6 +143,7 @@ bool buscar(char **board, int size, int posX, int posY)
         return false;
     }
 }
+
 void fillMatrix(char **board, int posX, int posY)
 {
     for (int i = 0; i < posX; i++)
@@ -79,6 +167,7 @@ void writeOnConsole(char **board, int posX, int posY)
         }
         std::cout << std::endl;
     }
+    std::cout << std::endl;
 }
 
 int main()
@@ -90,9 +179,24 @@ int main()
     char **board = (char **)malloc(posX * sizeof((char *)malloc(posY * sizeof(char))));
 
     fillMatrix(board, posX, posY);
-
+    /*
     board[0][1] = '#';
     board[1][1] = '#';
+*/
+    //////////////////////////////////////////////////cambiar los ask para que solo sea uno (start,end,cellLocked)
+    Cell a;
+    do
+    {
+        std::cout << "Indices de la celda bloqueada (para salir, introducir 0 0)";
+        a = askCell();
+        std::cout << "cell1: " << a.getCell1() << " cell2: " << a.getCell2();
+        if (a.getCell1() != 0 || a.getCell2() != 0)
+        {
+            std::cout << "eeeooooo";
+            board[a.getCell1()][a.getCell2()] = '#';
+        }
+        std::cout << std::endl;
+    } while (a.getCell1() != 0 || a.getCell2() != 0);
 
     writeOnConsole(board, posX, posY);
 
