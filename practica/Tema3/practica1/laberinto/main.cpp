@@ -42,38 +42,6 @@ Cell askCell()
     return a;
 }
 
-// Cell askStart()
-// {
-//     Cell a;
-//     int cell1, cell2;
-//     do
-//     {
-//         std::cout << "Celda inicial? ";
-//         std::cin >> cell1;
-//         a.setCell1(cell1);
-//         std::cin >> cell2;
-//         a.setCell2(cell2);
-//     } while (cell1 != 0 && cell2 != 0);
-
-//     return a;
-// }
-
-// Cell askEnd()
-// {
-//     Cell a;
-//     int cell1, cell2;
-//     do
-//     {
-//         std::cout << "Celda final? ";
-//         std::cin >> cell1;
-//         a.setCell1(cell1);
-//         std::cin >> cell2;
-//         a.setCell2(cell2);
-//     } while (cell1 != 0 && cell2 != 0);
-
-//     return a;
-// }
-
 bool is_empty(char **board, int posX, int posY)
 {
 
@@ -84,10 +52,10 @@ bool is_empty(char **board, int posX, int posY)
     return false;
 }
 
-bool is_valid(int size, int posX, int posY)
+bool is_valid(Cell cellSize, int posX, int posY)
 {
 
-    if (posX < size || posY < size)
+    if (posX < cellSize.getCell1() || posY < cellSize.getCell2())
     {
         return true;
     }
@@ -104,18 +72,25 @@ bool checkEnds(int posX, int posY)
     return true;
 }
 
-bool buscar(char **board, int size, int posX, int posY)
+bool buscar(char **board, Cell cellSize, int posX, int posY)
 {
-    if (posX == size - 1 && posY == size - 1)
+    if (posX == cellSize.getCell1() - 1 && posY == cellSize.getCell2() - 1)
     {
-        board[posX][posY] = '>';
-        return true;
+        if (is_empty(board, posX, posY))
+        {
+            board[posX][posY] = '>';
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     if (checkEnds(posX, posY))
     {
         if (is_empty(board, posX, posY))
         {
-            if (is_valid(size, posX, posY))
+            if (is_valid(cellSize, posX, posY))
             {
                 board[posX][posY] = '>';
             }
@@ -123,19 +98,19 @@ bool buscar(char **board, int size, int posX, int posY)
             {
                 return false;
             }
-            if (buscar(board, size, posX - 1, posY)) //Arriba
+            if (buscar(board, cellSize, posX - 1, posY)) //Arriba
             {
                 return true;
             }
-            else if (buscar(board, size, posX + 1, posY)) //Abajo
+            else if (buscar(board, cellSize, posX, posY + 1)) //Derecha
             {
                 return true;
             }
-            else if (buscar(board, size, posX, posY - 1)) //Izquierda
+            else if (buscar(board, cellSize, posX + 1, posY)) //Abajo
             {
                 return true;
             }
-            else if (buscar(board, size, posX, posY + 1)) //Derecha
+            else if (buscar(board, cellSize, posX, posY - 1)) //Izquierda
             {
                 return true;
             }
@@ -192,30 +167,65 @@ int main()
     char **board = (char **)malloc(posX * sizeof((char *)malloc(posY * sizeof(char))));
 
     fillMatrix(board, posX, posY);
-    /*
-    board[0][1] = '#';
-    board[1][1] = '#';
-*/
-    //////////////////////////////////////////////////cambiar los ask para que solo sea uno (start,end,cellLocked)
-    Cell a;
+
+    Cell cellSize, cellStart, cellEnd, cellLocked;
+
+    //Pedir tamaño
+    do
+    {
+        cellSize.setCell1(askCol());
+    } while (cellSize.getCell1() < 1);
+
+    do
+    {
+        cellSize.setCell2(askRow());
+    } while (cellSize.getCell2() < 1);
+
+    //pedir indices
     do
     {
         std::cout << "Indices de la celda bloqueada (para salir, introducir 0 0)";
-        a = askCell();
-        std::cout << "cell1: " << a.getCell1() << " cell2: " << a.getCell2();
-        if (a.getCell1() != 0 || a.getCell2() != 0)
+        cellLocked = askCell();
+        //std::cout << "cell1: " << cellLocked.getCell1() << " cell2: " << cellLocked.getCell2();
+        if ((cellLocked.getCell1() != 0 || cellLocked.getCell2() != 0) && (cellLocked.getCell1() < posX && cellLocked.getCell2() < posY))
         {
-            std::cout << "eeeooooo";
-            board[a.getCell1()][a.getCell2()] = '#';
+            board[cellLocked.getCell1()][cellLocked.getCell2()] = '#';
+        }
+        else
+        {
+            std::cout << "Introduzca una celda válida!!" << std::endl;
         }
         std::cout << std::endl;
-    } while (a.getCell1() != 0 || a.getCell2() != 0);
+    } while (cellLocked.getCell1() != 0 || cellLocked.getCell2() != 0);
+
+    //Pedir celda inicio
+    do
+    {
+        std::cout << "Celda inicial? ";
+        cellStart = askCell();
+
+    } while (cellStart.getCell1() < 0 || cellStart.getCell2() < 0 || cellStart.getCell1() >= cellSize.getCell1() || cellStart.getCell2() >= cellSize.getCell2());
+    std::cout << cellStart.getCell1() << " inicio " << cellStart.getCell2() << std::endl;
+
+    //Pedir celda fin
+    do
+    {
+        std::cout << "Celda final? ";
+        cellEnd = askCell();
+
+    } while (cellEnd.getCell1() < 0 || cellEnd.getCell2() < 0 || cellEnd.getCell1() >= cellSize.getCell1() || cellEnd.getCell2() >= cellSize.getCell2());
+    std::cout << cellEnd.getCell1() << " fin " << cellEnd.getCell2() << std::endl;
 
     writeOnConsole(board, posX, posY);
 
-    buscar(board, size, 1, 0);
-
-    writeOnConsole(board, posX, posY);
+    if (buscar(board, cellSize, 0, 0))
+    {
+        writeOnConsole(board, posX, posY);
+    }
+    else
+    {
+        std::cout << "El laberinto no tiene solucion" << std::endl;
+    }
 
     return 0;
 }
