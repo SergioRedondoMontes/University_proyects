@@ -63,18 +63,18 @@ bool is_valid(Cell cellSize, int posX, int posY)
     return false;
 }
 
-bool checkEnds(int posX, int posY)
+bool checkEnds(int posX, int posY, Cell cellEnd)
 {
-    if (posX < 0 || posY < 0) // evitamos que se salga del tamaño del array
+    if (posX < 0 || posY < 0 || posX > cellEnd.getCell1() || posY > cellEnd.getCell2()) // evitamos que se salga del tamaño del array
     {
         return false;
     }
     return true;
 }
 
-bool buscar(char **board, Cell cellSize, int posX, int posY)
+bool buscar(char **board, Cell cellSize, int posX, int posY, Cell cellEnd)
 {
-    if (posX == cellSize.getCell1() - 1 && posY == cellSize.getCell2() - 1)
+    if (posX == cellEnd.getCell1() && posY == cellEnd.getCell2())
     {
         if (is_empty(board, posX, posY))
         {
@@ -86,7 +86,7 @@ bool buscar(char **board, Cell cellSize, int posX, int posY)
             return false;
         }
     }
-    if (checkEnds(posX, posY))
+    if (checkEnds(posX, posY, cellEnd))
     {
         if (is_empty(board, posX, posY))
         {
@@ -98,19 +98,19 @@ bool buscar(char **board, Cell cellSize, int posX, int posY)
             {
                 return false;
             }
-            if (buscar(board, cellSize, posX - 1, posY)) //Arriba
+            if (buscar(board, cellSize, posX - 1, posY, cellEnd)) //Arriba
             {
                 return true;
             }
-            else if (buscar(board, cellSize, posX, posY + 1)) //Derecha
+            else if (buscar(board, cellSize, posX, posY + 1, cellEnd)) //Derecha
             {
                 return true;
             }
-            else if (buscar(board, cellSize, posX + 1, posY)) //Abajo
+            else if (buscar(board, cellSize, posX + 1, posY, cellEnd)) //Abajo
             {
                 return true;
             }
-            else if (buscar(board, cellSize, posX, posY - 1)) //Izquierda
+            else if (buscar(board, cellSize, posX, posY - 1, cellEnd)) //Izquierda
             {
                 return true;
             }
@@ -160,13 +160,8 @@ void writeOnConsole(char **board, int posX, int posY)
 
 int main()
 {
-    int posX, posY, size;
-    posX = 5;
-    posY = 5;
-    size = 5;
-    char **board = (char **)malloc(posX * sizeof((char *)malloc(posY * sizeof(char))));
 
-    fillMatrix(board, posX, posY);
+    char **board;
 
     Cell cellSize, cellStart, cellEnd, cellLocked;
 
@@ -181,16 +176,24 @@ int main()
         cellSize.setCell2(askRow());
     } while (cellSize.getCell2() < 1);
 
+    board = (char **)malloc(cellSize.getCell1() * sizeof((char *)malloc(cellSize.getCell2() * sizeof(char))));
+    fillMatrix(board, cellSize.getCell1(), cellSize.getCell2());
+
     //pedir indices
     do
     {
         std::cout << "Indices de la celda bloqueada (para salir, introducir 0 0)";
         cellLocked = askCell();
         //std::cout << "cell1: " << cellLocked.getCell1() << " cell2: " << cellLocked.getCell2();
-        if ((cellLocked.getCell1() != 0 || cellLocked.getCell2() != 0) && (cellLocked.getCell1() < posX && cellLocked.getCell2() < posY))
+        if ((cellLocked.getCell1() != 0 || cellLocked.getCell2() != 0) && (cellLocked.getCell1() < cellSize.getCell1() && cellLocked.getCell2() < cellSize.getCell2()))
         {
             board[cellLocked.getCell1()][cellLocked.getCell2()] = '#';
         }
+        else if (cellLocked.getCell1() == 0 && cellLocked.getCell2() == 0)
+        {
+            /* code */
+        }
+
         else
         {
             std::cout << "Introduzca una celda válida!!" << std::endl;
@@ -205,7 +208,6 @@ int main()
         cellStart = askCell();
 
     } while (cellStart.getCell1() < 0 || cellStart.getCell2() < 0 || cellStart.getCell1() >= cellSize.getCell1() || cellStart.getCell2() >= cellSize.getCell2());
-    std::cout << cellStart.getCell1() << " inicio " << cellStart.getCell2() << std::endl;
 
     //Pedir celda fin
     do
@@ -214,13 +216,12 @@ int main()
         cellEnd = askCell();
 
     } while (cellEnd.getCell1() < 0 || cellEnd.getCell2() < 0 || cellEnd.getCell1() >= cellSize.getCell1() || cellEnd.getCell2() >= cellSize.getCell2());
-    std::cout << cellEnd.getCell1() << " fin " << cellEnd.getCell2() << std::endl;
 
-    writeOnConsole(board, posX, posY);
+    writeOnConsole(board, cellSize.getCell1(), cellSize.getCell2());
 
-    if (buscar(board, cellSize, 0, 0))
+    if (buscar(board, cellSize, cellStart.getCell1(), cellStart.getCell2(), cellEnd))
     {
-        writeOnConsole(board, posX, posY);
+        writeOnConsole(board, cellSize.getCell1(), cellSize.getCell2());
     }
     else
     {
