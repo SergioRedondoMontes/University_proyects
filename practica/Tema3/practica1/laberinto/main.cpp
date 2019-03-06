@@ -63,9 +63,9 @@ bool is_valid(Cell cellSize, int posX, int posY)
     return false;
 }
 
-bool checkEnds(int posX, int posY, Cell cellEnd)
+bool checkEnds(int posX, int posY, Cell cellSize)
 {
-    if (posX < 0 || posY < 0 || posX > cellEnd.getCell1() || posY > cellEnd.getCell2()) // evitamos que se salga del tamaño del array
+    if (posX < 0 || posY < 0 || posX > cellSize.getCell1() || posY > cellSize.getCell2()) // evitamos que se salga del tamaño del array
     {
         return false;
     }
@@ -86,7 +86,7 @@ bool buscar(char **board, Cell cellSize, int posX, int posY, Cell cellEnd)
             return false;
         }
     }
-    if (checkEnds(posX, posY, cellEnd))
+    if (checkEnds(posX, posY, cellSize))
     {
         if (is_empty(board, posX, posY))
         {
