@@ -206,6 +206,10 @@ int main()
     {
         std::cout << "Celda inicial? ";
         cellStart = askCell();
+        if (cellStart.getCell1() < 0 || cellStart.getCell2() < 0 || cellStart.getCell1() >= cellSize.getCell1() || cellStart.getCell2() >= cellSize.getCell2())
+        {
+            std::cout << "Introduzca una celda válida!!" << std::endl;
+        }
 
     } while (cellStart.getCell1() < 0 || cellStart.getCell2() < 0 || cellStart.getCell1() >= cellSize.getCell1() || cellStart.getCell2() >= cellSize.getCell2());
 
@@ -214,6 +218,10 @@ int main()
     {
         std::cout << "Celda final? ";
         cellEnd = askCell();
+        if (cellEnd.getCell1() < 0 || cellEnd.getCell2() < 0 || cellEnd.getCell1() >= cellSize.getCell1() || cellEnd.getCell2() >= cellSize.getCell2())
+        {
+            std::cout << "Introduzca una celda válida!!" << std::endl;
+        }
 
     } while (cellEnd.getCell1() < 0 || cellEnd.getCell2() < 0 || cellEnd.getCell1() >= cellSize.getCell1() || cellEnd.getCell2() >= cellSize.getCell2());
 
