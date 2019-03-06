@@ -65,7 +65,7 @@ bool is_valid(Cell cellSize, int posX, int posY)
 
 bool checkEnds(int posX, int posY, Cell cellSize)
 {
-    if (posX < 0 || posY < 0 || posX > cellSize.getCell1() || posY > cellSize.getCell2()) // evitamos que se salga del tamaño del array
+    if (posX < 0 || posY < 0 || posX >= cellSize.getCell1() || posY >= cellSize.getCell2()) // evitamos que se salga del tamaño del array
     {
         return false;
     }
@@ -204,31 +204,16 @@ int main()
     //Pedir celda inicio
     do
     {
-        if (cellStart.getCell1() < 0 || cellStart.getCell2() < 0 || cellStart.getCell1() >= cellSize.getCell1() || cellStart.getCell2() >= cellSize.getCell2())
-        {
-            std::cout << "Introduzca una celda válida!!" << std::endl;
-        }
-        else
-        {
-
-            std::cout << "Celda inicial? ";
-            cellStart = askCell();
-        }
+        std::cout << "Celda inicial? ";
+        cellStart = askCell();
 
     } while (cellStart.getCell1() < 0 || cellStart.getCell2() < 0 || cellStart.getCell1() >= cellSize.getCell1() || cellStart.getCell2() >= cellSize.getCell2());
 
     //Pedir celda fin
     do
     {
-        if (cellEnd.getCell1() < 0 || cellEnd.getCell2() < 0 || cellEnd.getCell1() >= cellSize.getCell1() || cellEnd.getCell2() >= cellSize.getCell2())
-        {
-            std::cout << "Introduzca una celda válida!!" << std::endl;
-        }
-        else
-        {
-            std::cout << "Celda final? ";
-            cellEnd = askCell();
-        }
+        std::cout << "Celda final? ";
+        cellEnd = askCell();
 
     } while (cellEnd.getCell1() < 0 || cellEnd.getCell2() < 0 || cellEnd.getCell1() >= cellSize.getCell1() || cellEnd.getCell2() >= cellSize.getCell2());
 
