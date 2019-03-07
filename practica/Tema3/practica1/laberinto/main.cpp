@@ -2,8 +2,16 @@
 #include <string>
 #include "cell.h"
 
-//  Created by Sergio Redondo on 20/02/19.
+//  Created by Sergio Redondo & JAIME MARTINEZ on 20/02/19.
 
+/* askRow()
+ * 
+ * Pide el tamaño de la fila
+ * 
+ *Precondición: El tamaño tiene que ser >= 1
+ * 
+ * -> RETURN: tamaño de array (int)
+ */
 int askRow()
 {
     int sizeRow;
@@ -16,6 +24,14 @@ int askRow()
     return sizeRow;
 }
 
+/* askCol()
+ * 
+ * Pide el tamaño de la columna
+ * 
+ *Precondición: El tamaño tiene que ser >= 1
+ * 
+ * -> RETURN: tamaño de array (int)
+ */
 int askCol()
 {
     int sizeCol;
@@ -28,6 +44,12 @@ int askCol()
     return sizeCol;
 }
 
+/* askCell()
+ * 
+ * Creamos una celda en la que guardamos la posicion en la que se encuentra dentro del tablero
+ * 
+ * -> RETURN: (Cell celda)
+ */
 Cell askCell()
 {
     Cell a;
@@ -42,6 +64,16 @@ Cell askCell()
     return a;
 }
 
+/** is_empty()
+ * 
+ *Precondición: Los parametros no pueden ser nulos ni < 0 && > que el tamaño del tablero
+ * 
+ * -> PARAMETERS:   - (char **boar) matriz de char
+ *                  - (int posX) fila de inicio
+ *                  - (int posY) columna de inicio
+ * 
+ * -> RETURN: boolean
+ */
 bool is_empty(char **board, int posX, int posY)
 {
 
@@ -52,6 +84,16 @@ bool is_empty(char **board, int posX, int posY)
     return false;
 }
 
+/** is_valid()
+ * 
+ *Precondición: Los parametros no pueden ser nulos ni < 0 && > que el tamaño del tablero
+ * 
+ * -> PARAMETERS:   - (char **boar) matriz de char
+ *                  - (int posX) fila de inicio
+ *                  - (int posY) columna de inicio
+ * 
+ * -> RETURN: boolean
+ */
 bool is_valid(Cell cellSize, int posX, int posY)
 {
 
@@ -63,6 +105,16 @@ bool is_valid(Cell cellSize, int posX, int posY)
     return false;
 }
 
+/** checkEnds()
+ * 
+ *Precondición: Los parametros no pueden ser nulos ni < 0 && > que el tamaño del tablero
+ * 
+ * -> PARAMETERS:   - (Cell cellSize) celda con el tamaño del tablero
+ *                  - (int posX) fila de inicio
+ *                  - (int posY) columna de inicio
+ * 
+ * -> RETURN: boolean
+ */
 bool checkEnds(int posX, int posY, Cell cellSize)
 {
     if (posX < 0 || posY < 0 || posX >= cellSize.getCell1() || posY >= cellSize.getCell2()) // evitamos que se salga del tamaño del array
@@ -72,6 +124,18 @@ bool checkEnds(int posX, int posY, Cell cellSize)
     return true;
 }
 
+/** buscar()
+ * 
+ *Precondición: Los parametros no pueden ser nulos ni < 0 && > que el tamaño del tablero
+ * 
+ * -> PARAMETERS:   - (char **boar) matriz de char
+                    - (Cell cellSize) celda con el tamaño del tablero
+                    - (int posX) fila de inicio
+                    - (int posY) columna de inicio
+                    - (Cell cellEnd) celda con la posicion de fin del tablero
+ * 
+ * -> RETURN: boolean
+ */
 bool buscar(char **board, Cell cellSize, int posX, int posY, Cell cellEnd)
 {
     if (posX == cellEnd.getCell1() && posY == cellEnd.getCell2())
@@ -132,12 +196,20 @@ bool buscar(char **board, Cell cellSize, int posX, int posY, Cell cellEnd)
     }
 }
 
-void fillMatrix(char **board, int posX, int posY)
+/* fillMatrix()
+ * Esta funcion rellena el array con guiones
+ *
+ * -> PARAMETERS:   - (char **boar) matriz de char
+                    - (Cell cellSize) celda con el tamaño del tablero
+ * 
+ * -> RETURN: boolean
+ */
+void fillMatrix(char **board, Cell cellSize)
 {
-    for (int i = 0; i < posX; i++)
+    for (int i = 0; i < cellSize.getCell1(); i++)
     {
-        char *arrTemp = (char *)malloc(posY * sizeof(char));
-        for (int j = 0; j < posY; j++)
+        char *arrTemp = (char *)malloc(cellSize.getCell2() * sizeof(char));
+        for (int j = 0; j < cellSize.getCell2(); j++)
         {
             arrTemp[j] = '-';
         }
@@ -145,11 +217,19 @@ void fillMatrix(char **board, int posX, int posY)
     }
 }
 
-void writeOnConsole(char **board, int posX, int posY)
+/* writeOnConsole()
+ * Este método imprime el arrray
+ *
+ * Precondición: El array no puede ser nulo y el tamaño tiene que ser >= 1
+ * 
+ * -> PARAMETERS: tamaño del array y array de int 
+ * -> RETURN: nada
+*/
+void writeOnConsole(char **board, Cell cellSize)
 {
-    for (int i = 0; i < posX; i++)
+    for (int i = 0; i < cellSize.getCell1(); i++)
     {
-        for (int j = 0; j < posY; j++)
+        for (int j = 0; j < cellSize.getCell2(); j++)
         {
             std::cout << board[i][j] << " ";
         }
@@ -177,7 +257,7 @@ int main()
     } while (cellSize.getCell2() < 1);
 
     board = (char **)malloc(cellSize.getCell1() * sizeof((char *)malloc(cellSize.getCell2() * sizeof(char))));
-    fillMatrix(board, cellSize.getCell1(), cellSize.getCell2());
+    fillMatrix(board, cellSize);
 
     //pedir indices
     do
@@ -225,11 +305,11 @@ int main()
 
     } while (cellEnd.getCell1() < 0 || cellEnd.getCell2() < 0 || cellEnd.getCell1() >= cellSize.getCell1() || cellEnd.getCell2() >= cellSize.getCell2());
 
-    writeOnConsole(board, cellSize.getCell1(), cellSize.getCell2());
+    writeOnConsole(board, cellSize);
 
     if (buscar(board, cellSize, cellStart.getCell1(), cellStart.getCell2(), cellEnd))
     {
-        writeOnConsole(board, cellSize.getCell1(), cellSize.getCell2());
+        writeOnConsole(board, cellSize);
     }
     else
     {
