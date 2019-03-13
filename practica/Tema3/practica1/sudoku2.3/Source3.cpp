@@ -1,8 +1,10 @@
+//  Created by Sergio Redondo & JAIME MARTINEZ on 20/02/19.
+
 #include <iostream>
 #include <stdio.h>
 using namespace std;
 
-//Funcion que te imprime el tablero, primero sin hacer y luego la volvemos a llamar en la funcion "HacerSudoku" y nos lo imprime hecho
+//Función que te imprime el tablero, primero sin hacer y luego la volvemos a llamar en la función "HacerSudoku" y nos lo imprime ya hecho
 void ImprimirTablero(int sudoku[9][9], int fila, int columna)
 {
 	for (int fila = 0; fila < 9; fila++)
@@ -34,7 +36,7 @@ void ImprimirTablero(int sudoku[9][9], int fila, int columna)
 	}
 }
 
-//Funcion que te devuelve true o flase en funcion si ha encontrado el numero o no
+//Función que te devuelve true o flase en función si el numero puede ir en esa posición o no
 bool esValido(int sudoku[9][9], int fila, int columna, int valor)
 {
 	if (sudoku[fila][columna] != -1)
@@ -69,22 +71,24 @@ bool esValido(int sudoku[9][9], int fila, int columna, int valor)
 
 bool HacerSudoku(int sudoku[9][9], int fila, int columna)
 {
-	//Te recorre el array valores para encontrar cual es el numero correcto para la posicion
+	//Recorre del 1 al 9 para encontrar cual es el numero correcto para la posicion
 	for (int i = 1; i <= 9; i++)
 	{
-
+		//LLamamos a la función esValida que nos comprueba si el número es correcto o no
 		if (esValido(sudoku, fila, columna, i))
-		{ //LLamamos a la funcion esValida que nos comprueba si el numero es correcto o no
-
+		{ 
+			//Si es correcto, se sustituye el valor que tenga en ese momento sudoku[fila][columna] por el valor que tenga i
 			sudoku[fila][columna] = i;
 
+			//Hasta que la fila no sea mayor que 8, aumentamos la fila para probar la siguiente posición
 			if (fila < 8)
 			{
 				if (HacerSudoku(sudoku, fila + 1, columna))
 					return true;
 				else
-					sudoku[fila][columna] = -1;
+					sudoku[fila][columna] = -1; //En caso del que no podamos colocar el valor actual
 			}
+			//Se pone a 0 la fila y se aumenta una columna ya que hemos llegado al final de la fila
 			else if (fila == 8 && columna != 8)
 			{
 				if (HacerSudoku(sudoku, 0, columna + 1))
@@ -92,10 +96,12 @@ bool HacerSudoku(int sudoku[9][9], int fila, int columna)
 				else
 					sudoku[fila][columna] = -1;
 			}
+
 			else if (fila == 8 && columna == 8)
 			{
-				//ImprimirTablero(sudoku, fila, columna);
-
+				//Si la función es true, se imprimirá el sudoku ya realizado
+				cout << "El sudoku resuelto es:\n\n";
+				ImprimirTablero(sudoku, fila, columna);
 				return true;
 			}
 		}
@@ -103,6 +109,7 @@ bool HacerSudoku(int sudoku[9][9], int fila, int columna)
 		{
 			if (sudoku[fila][columna] != -1)
 			{
+				//Hasta que la fila no sea mayor que 8, aumentamos la fila para probar la siguiente posición 
 				if (fila < 8)
 				{
 					if (HacerSudoku(sudoku, fila + 1, columna))
@@ -110,6 +117,7 @@ bool HacerSudoku(int sudoku[9][9], int fila, int columna)
 					else
 						return false;
 				}
+				//Se pone a 0 la fila y se aumenta una columna ya que hemos llegado al final de la fila
 				else if (fila == 8 && columna != 8)
 				{
 					if (HacerSudoku(sudoku, 0, columna + 1))
@@ -120,7 +128,10 @@ bool HacerSudoku(int sudoku[9][9], int fila, int columna)
 				}
 				else if (fila == 8 && columna == 8)
 				{
-					//ImprimirTablero(sudoku, fila, columna);
+					//Si la función es true, se imprimirá el sudoku ya realizado
+					cout << "El sudoku resuelto es:\n\n";
+					ImprimirTablero(sudoku, fila, columna);
+
 					return true;
 				}
 			}
@@ -130,9 +141,10 @@ bool HacerSudoku(int sudoku[9][9], int fila, int columna)
 	return false;
 }
 
-bool resolverSudoku(int sudoku[9][9])
+//Función que llama a la función para resolver el sudoku
+void resolverSudoku(int sudoku[9][9])
 {
-	return HacerSudoku(sudoku, 0, 0);
+	HacerSudoku(sudoku, 0, 0);
 }
 
 int main()
@@ -140,7 +152,7 @@ int main()
 	int fila = 0, columna = 0;
 
 	//Definimos el sudoku sin hacer
-	int sudoku[9][9] = {{5, 3, -1, -1, 7, -1, -1, -1, -1},
+	int sudoku[9][9] = { {5, 3, -1, -1, 7, -1, -1, -1, -1},
 						{6, -1, -1, 1, 9, 5, -1, -1, -1},
 						{-1, 9, 8, -1, -1, -1, -1, 6, -1},
 						{8, -1, -1, -1, 6, -1, -1, -1, 3},
@@ -148,24 +160,16 @@ int main()
 						{7, -1, -1, -1, 2, -1, -1, -1, 6},
 						{-1, 6, -1, -1, -1, -1, 2, 8, -1},
 						{-1, -1, -1, 4, 1, 9, -1, -1, 5},
-						{-1, -1, -1, -1, 8, -1, -1, 7, 9}};
+						{-1, -1, -1, -1, 8, -1, -1, 7, 9} };
 
-	cout << "El sudoku sin resolver es: \n\n\n";
+	cout << "El sudoku sin resolver es:\n\n\n";
 	ImprimirTablero(sudoku, fila, columna); //Imprimimos el tablero sin resolver
 	cout << endl
-		 << endl
-		 << endl;
-	if (resolverSudoku(sudoku))
-	{
-		cout << "El sudoku resuelto es:\n\n";
-		ImprimirTablero(sudoku, fila, columna);
-	}
-	else
-	{
-		cout << "El sudoku no tiene solucion." << endl;
-	}
-	//cout << "El sudoku resuelto es:\n\n";
-	//HacerSudoku(sudoku, fila, columna);
+		<< endl
+		<< endl;
+	
+	if (HacerSudoku(sudoku, fila, columna) == true) {}
+	
 
 	return 0;
 }
