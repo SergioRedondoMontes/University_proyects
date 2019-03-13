@@ -17,10 +17,9 @@ void ListaContigua::setValor(int posicion, int nuevoValor){
 
 void ListaContigua::insertarAlFinal (int nuevoValor){
     if (isLlena()) {
-        this->capacidad = this->capacidad + INCREMENTO;
-        this->vector = (int *)realloc(this->vector,capacidad*sizeof(this->vector));
+        this->vector = (int *)realloc(this->vector,this->capacidad + INCREMENTO*sizeof(int));
     }
-        this->vector[this->n] = nuevoValor;
+        this->vector[this->n-1] = nuevoValor;
         this-> n = this->n +1;
     
     
@@ -28,9 +27,9 @@ void ListaContigua::insertarAlFinal (int nuevoValor){
 
 void ListaContigua::eliminarAlFinal(){
     this->n = this->n - 1;
-    if ((this->capacidad - n) > INCREMENTO) {
-        this->capacidad = this-> capacidad - INCREMENTO; 
-        this->vector = (int *)realloc(this->vector,capacidad*sizeof(this->vector));
+    if ((this->capacidad - n) == 2*INCREMENTO) {
+        this->vector = (int *)realloc(this->vector,capacidad - INCREMENTO*sizeof(int));
+        this->capacidad -= INCREMENTO;
     }
     
 }
