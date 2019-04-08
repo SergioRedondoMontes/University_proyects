@@ -86,27 +86,6 @@ void ListaEnlazada::eliminar(int posicion)
     this->n--;
 }
 
-void ListaEnlazada::invertir()
-{
-    if (getN() < 0)
-        return;
-
-    Nodo *anteriorNode, *actualNode, *siguienteNodo;
-    anteriorNode = lista;
-    actualNode = anteriorNode->siguienteNodo;
-
-    do
-    {
-        siguienteNodo = actualNode->siguienteNodo;
-        actualNode->siguienteNodo = anteriorNode;
-        anteriorNode = actualNode;
-        actualNode = siguienteNodo;
-    } while (siguienteNodo != NULL);
-
-    lista->siguienteNodo = NULL;
-    lista = anteriorNode;
-}
-
 ListaEnlazada::~ListaEnlazada()
 {
     while (n > 0)

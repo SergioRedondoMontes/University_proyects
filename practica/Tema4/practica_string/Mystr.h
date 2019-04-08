@@ -1,12 +1,22 @@
-#include "ListaEnlazada.h"
 
 class Mystr
 {
 private:
   /* data */
+  char *_arr;
 
 public:
-  Mystr(/* args */);
+  Mystr(char *arrCopia);
+
+  /* Sobre carga */
+  inline bool operator==(const Mystr &other); //Usar la función Compare.
+  inline bool operator!=(const Mystr &other); //Puede ser el opuesto a ==
+  inline bool operator<(const Mystr &other);  //Usar la función Compare (del siguiente apartado)
+  inline bool operator>(const Mystr &other);  //Usar la función Compare (del siguiente apartado)
+  inline bool operator<=(const Mystr &other); //Puede ser el opuesto a >
+  inline bool operator>=(const Mystr &other); //Puede ser el opuesto a <
+  inline char &operator[](int index);         //Devuelve el caracter en el elemento “index”.
+  inline Mystr operator+(const Mystr &other); //Concatena una cadena a otra.
 
   //Tamaño del array de caracteres. Se recomienda usar strlen en vez de
   // almacenar el largo de la cadena en el objeto

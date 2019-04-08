@@ -1,76 +1,82 @@
 #pragma once
 #include "Nodo.h"
 
-// Clase que representa a una lista enlazada simple. No tiene restricciï¿½n de tamaï¿½o
+// Clase que representa a una lista enlazada simple. No tiene restricción de tamaño
 // Se trata de una lista enlazada de nodos, en donde cada nodo tiene un elemento (un int), y un puntero al siguiente nodo
 class ListaEnlazada
 {
-	// Puntero que apuntarï¿½ al primer nodo de la lista, o serï¿½ NULL si la lista estï¿½ vacï¿½a
+	// Puntero que apuntará al primer nodo de la lista, o será NULL si la lista está vacía
 	Nodo *lista;
 
 	// Numero actual de elementos que tiene la lista
-	// Precondiciï¿½n: n>=0
+	// Precondición: n>=0
 	int n;
 
 	// Obtiene un nodo de la lista
-	// Parï¿½metro: la posiciï¿½n del nodo
-	// Retorno: un puntero al nodo que estï¿½ en dicha posiciï¿½n
-	// Precondiciones:
-	// - la posiciï¿½n debe estar en el intervalo [0, n-1]
+	// Parámetro: la posición del nodo
+	// Retorno: un puntero al nodo que está en dicha posición
+	// Precondiciones: 
+	// - la posición debe estar en el intervalo [0, n-1]
 	// - La lista no esta vacia (n>0)
 	// Complejidad temporal: O(n)
 	// Complejidad espacial: O(1)
-	Nodo *getNodo(int posicion);
+	Nodo * getNodo (int posicion);
 
-  public:
-	// Constructor. Crea una lista de tamaï¿½o 0
+public:
+
+	// Constructor. Crea una lista de tamaño 0
 	// Complejidad temporal y espacial: O(1)
 	ListaEnlazada();
 
-	// Devuelve un elemento de la lista en determinada posiciï¿½n
-	// Parï¿½metro: la posiciï¿½n del elemento
-	// Retorno: una copia del elemento encontrado en esa posiciï¿½n
+	// Devuelve un elemento de la lista en determinada posición
+	// Parámetro: la posición del elemento
+	// Retorno: una copia del elemento encontrado en esa posición
 	// Precondiciones: posicion en [0, n-1] y n>0
 	// Complejidad temporal: O(n)
 	// Complejidad espacial: O(1)
 	int getValor(int posicion);
 
 	// Modifica un elemento de la lista
-	// Parï¿½metros:
-	// - posicion: la posiciï¿½n del elemento que queremos modificar
+	// Parámetros:
+	// - posicion: la posición del elemento que queremos modificar
 	// - nuevoValor: el nuevo valor del elemento
 	// Precondiciones: posicion en [0, n-1] y n>0
 	// Complejidad temporal: O(n)
 	// Complejidad espacial: O(1)
 	void setValor(int posicion, int nuevoValor);
 
-	// Devuelve el tamaï¿½o actual de la lista
+	// Devuelve el tamaño actual de la lista
 	// Complejidad temporal y espacial: O(1)
-	int getN();
+	int getN(); 
 
-	// Inserta un nuevo elemento en una posiciï¿½n de la lista
-	// Los elementos que habï¿½a desde la posiciï¿½n hasta el final de la lista se desplazarï¿½n una posiciï¿½n a la derecha
-	// Parï¿½metros:
-	// - posiciï¿½n: la posiciï¿½n en donde queremos poner el nuevo elemento. Si es 0 se inserta al principio, si es n se inserta al final
+	// Inserta un nuevo elemento en una posición de la lista
+	// Los elementos que había desde la posición hasta el final de la lista se desplazarán una posición a la derecha
+	// Parámetros:
+	// - posición: la posición en donde queremos poner el nuevo elemento. Si es 0 se inserta al principio, si es n se inserta al final
 	// - nuevoValor: el nuevo elemento que queremos poner
 	// Precondiciones: posicion en [0, n]
 	// Complejidad temporal: O(n)
 	// Complejidad espacial: O(1)
-	void insertar(int posicion, int nuevoValor);
+	void insertar (int posicion, int nuevoValor);
 
-	// Elimina un elemento en una posiciï¿½n dada.
-	// Los elementos que habï¿½a desde posicion+1 hasta el final de la lista se desplazarï¿½n una posiciï¿½n a la izquierda
-	// Parï¿½metros:
-	// - posicion: la posiciï¿½n del elemento que queremos borrar. Si es 0 se elimina el primero y si es n-1 se elimina el ï¿½ltimo
+	// Elimina un elemento en una posición dada.
+	// Los elementos que había desde posicion+1 hasta el final de la lista se desplazarán una posición a la izquierda
+	// Parámetros:
+	// - posicion: la posición del elemento que queremos borrar. Si es 0 se elimina el primero y si es n-1 se elimina el último
 	// Precondiciones: posicion en [0, n-1] y n>0
 	// Complejidad temporal: O(n)
 	// Complejidad espacial: O(1)
-	void eliminar(int posicion);
-
-	void invertir();
+	void eliminar (int posicion);
 
 	// Destructor. Libera memoria
 	// Complejidad temporal: O(n)
 	// Complejidad espacial: O(1)
 	~ListaEnlazada();
 };
+
+
+
+
+
+
+
