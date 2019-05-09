@@ -1,3 +1,5 @@
+#include <iostream>
+#include <cstring>
 
 class Mystr
 {
@@ -19,6 +21,7 @@ public:
     bool operator>(const Mystr &other);  //Usar la función Compare (del siguiente apartado)
     bool operator<=(const Mystr &other); //Puede ser el opuesto a >
     bool operator>=(const Mystr &other); //Puede ser el opuesto a <
+    Mystr& operator=(const Mystr &other); //
     char &operator[](int index);         //Devuelve el caracter en el elemento “index”.
     Mystr operator+(const Mystr &other); //Concatena una cadena a otra.
     
@@ -69,6 +72,6 @@ public:
     //por index. *Atender al incremento de la capacidad de la primera cadena*
     Mystr Introduce(const Mystr &other, int unsigned index);
     
-    void imprimir();
+    void print();
     ~Mystr();
 };

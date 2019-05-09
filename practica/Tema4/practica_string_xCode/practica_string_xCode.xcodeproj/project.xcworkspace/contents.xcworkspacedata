@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:practica_string_xCode.xcodeproj">
+      location = "group:/Users/sergioredondo/Desktop/UTAD/U-TAD_Alumno/algoritmos/practica/Tema4/practica_string_xCode/practica_string_xCode/listaEnlazada">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

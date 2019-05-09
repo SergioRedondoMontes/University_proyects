@@ -1,6 +1,4 @@
 #include "Mystr.h"
-#include <iostream>
-#include <cstring>
 
 using namespace std;
 
@@ -12,23 +10,19 @@ Mystr::Mystr(){
 Mystr::Mystr(const char *arrCopia)
 {
     _size = (int)strlen(arrCopia);
-    _capacity = _size+1 * 2;
+    _capacity = (_size+1) * 2;
     //tengo que reservar el doble de memoria o lo hace por defecto c++ al guardar un string en un char array
     _arr = (char *)malloc(_capacity * sizeof(char) );
     memcpy(_arr, arrCopia, _capacity);
-    //que termine en /0 es una precondicion o lo tengo que hacer yo
-    _arr[_size + 1] = '\0';
 }
 
 Mystr::Mystr(const Mystr &arrCopia)
 {
     _size = (int)strlen(arrCopia._arr);
-    _capacity = _size;
+    _capacity = arrCopia._capacity;
     //tengo que reservar el doble de memoria o lo hace por defecto c++ al guardar un string en un char array
     _arr = (char *)malloc(_capacity * sizeof(char));
     memcpy(_arr, arrCopia._arr,_capacity);
-    //que termine en /0 es una precondicion o lo tengo que hacer yo
-    _arr[_size + 1] = '\0';
 }
 
 
@@ -81,7 +75,18 @@ Mystr::Mystr(const Mystr &arrCopia)
      }
      return false;
  }
- 
+
+Mystr& Mystr::operator=(const Mystr &other){
+    _size = (int)strlen(other._arr);
+    _capacity = other._capacity;
+    //tengo que reservar el doble de memoria o lo hace por defecto c++ al guardar un string en un char array
+    _arr = (char *)malloc(_capacity * sizeof(char));
+    memcpy(_arr, other._arr,_capacity);
+    //que termine en /0 es una precondicion o lo tengo que hacer yo
+    return *this;
+}
+
+
  //Devuelve el caracter en el elemento “index”.
  char &Mystr::operator[](int index) {
      return _arr[index];
@@ -181,7 +186,7 @@ int Mystr::TrimRight(){
         _size--;
     }
     _size = (int)strlen(_arr);
-    if (_size >= Length()/4) {
+    if (_size <= Length()/4) {
         _arr = (char *)realloc(_arr, _size*2);
         _capacity = Length()/4;
     }
@@ -199,7 +204,7 @@ int Mystr::TrimLeft(){
     }
     string aux = Right(_size-count)._arr;
     _size = _size-count;
-    if (_size >= Length()/4) {
+    if (_size <= Length()/4) {
         _arr = (char *)realloc(_arr, _size*2);
         _capacity = Length()/4;
     }
@@ -210,7 +215,7 @@ int Mystr::TrimLeft(){
  //Elimina los espacios en blanco en ambos lados del texto. Devuelve el número de
  //espacios eliminados. *Atender al decremento de la capacidad*
 int Mystr::Trim(){
-    return TrimRight()+ TrimLeft();
+    return TrimRight() + TrimLeft();
 }
  //Convierte todos los caracteres en letras mayúsculas. Devuelve el número de
  //caracteres que han sido cambiados a mayúsculas. Se permite usar toupper de C.
@@ -274,8 +279,8 @@ Mystr Mystr::Introduce(const Mystr &other, int unsigned index){
     return Mystr(a.c_str());
 }
 
-void Mystr::imprimir(){
-    cout << _arr << endl;
+void Mystr::print(){
+    std::cout << _arr <<std::endl;
 }
 
 Mystr::~Mystr(){

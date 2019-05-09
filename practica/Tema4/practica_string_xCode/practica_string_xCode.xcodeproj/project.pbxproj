@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BA2CDA7722576E8200DFF864 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA2CDA7622576E8200DFF864 /* main.cpp */; };
 		BA2CDA8022576EA800DFF864 /* Mystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA2CDA7D22576EA800DFF864 /* Mystr.cpp */; };
+		BA40EBEC225B79A30020F49F /* impresionListasEnlazadas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA40EBE9225B79A30020F49F /* impresionListasEnlazadas.cpp */; };
+		BA40EBED225B79A30020F49F /* ListaEnlazada.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA40EBEB225B79A30020F49F /* ListaEnlazada.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +31,11 @@
 		BA2CDA7D22576EA800DFF864 /* Mystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mystr.cpp; sourceTree = "<group>"; };
 		BA2CDA7E22576EA800DFF864 /* Mystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mystr.h; sourceTree = "<group>"; };
 		BA2CDA7F22576EA800DFF864 /* Practica A2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Practica A2.pdf"; sourceTree = "<group>"; };
+		BA40EBE7225B79A30020F49F /* Nodo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nodo.h; sourceTree = "<group>"; };
+		BA40EBE8225B79A30020F49F /* ListaEnlazada.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListaEnlazada.h; sourceTree = "<group>"; };
+		BA40EBE9225B79A30020F49F /* impresionListasEnlazadas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = impresionListasEnlazadas.cpp; sourceTree = "<group>"; };
+		BA40EBEA225B79A30020F49F /* impresionListasEnlazadas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = impresionListasEnlazadas.h; sourceTree = "<group>"; };
+		BA40EBEB225B79A30020F49F /* ListaEnlazada.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ListaEnlazada.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +68,11 @@
 		BA2CDA7522576E8200DFF864 /* practica_string_xCode */ = {
 			isa = PBXGroup;
 			children = (
+				BA40EBE9225B79A30020F49F /* impresionListasEnlazadas.cpp */,
+				BA40EBEA225B79A30020F49F /* impresionListasEnlazadas.h */,
+				BA40EBEB225B79A30020F49F /* ListaEnlazada.cpp */,
+				BA40EBE8225B79A30020F49F /* ListaEnlazada.h */,
+				BA40EBE7225B79A30020F49F /* Nodo.h */,
 				BA2CDA7D22576EA800DFF864 /* Mystr.cpp */,
 				BA2CDA7E22576EA800DFF864 /* Mystr.h */,
 				BA2CDA7F22576EA800DFF864 /* Practica A2.pdf */,
@@ -127,6 +139,8 @@
 			files = (
 				BA2CDA7722576E8200DFF864 /* main.cpp in Sources */,
 				BA2CDA8022576EA800DFF864 /* Mystr.cpp in Sources */,
+				BA40EBEC225B79A30020F49F /* impresionListasEnlazadas.cpp in Sources */,
+				BA40EBED225B79A30020F49F /* ListaEnlazada.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
