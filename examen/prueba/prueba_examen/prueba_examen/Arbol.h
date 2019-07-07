@@ -12,6 +12,9 @@ class Arbol {
 	Arbol *izq;  //sub-arbol izquierdo
 	Arbol *der;  //sub-arbol derecho
 	void deleteArbol();// elimina los dos subarboles izquierda y derecha del nodo
+    Arbol *buscarValor(Arbol *arbol,int valor);
+    bool espejo(Arbol *I, Arbol *D); // comprueba si un arbol es espejo de otro
+
 
 public:
 	Arbol(int valor);
@@ -19,5 +22,3 @@ public:
 	bool Insertar(int valorNuevo, int valorPadre, int Orientacion);  
 	bool Simetrico();   
 };
-
-
